@@ -1,0 +1,18 @@
+.header{
+    background-color: rgb(210, 147, 30);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    background-color: transparent;
+    border: none;
+}
+
+.title{
+    margin: 0;
+}

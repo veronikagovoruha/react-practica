@@ -1,3 +1,5 @@
+import s from "./TransactionForm.module.css";
+
 const TransactionForm = () => {
     return(
         <>

@@ -2,7 +2,7 @@ import MainPage from "./MainPage/MainPage"
 
 export const App = () => {
     return(
-        <div>
+        <div className="container">
             <MainPage />
         </div>
     )

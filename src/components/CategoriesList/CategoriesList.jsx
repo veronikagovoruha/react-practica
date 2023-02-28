@@ -1,19 +1,35 @@
+import s from './CategoriesList.module.css';
+import sprite from '../../assets/sprite.svg'
+
 const CategoriesList = () => {
     return(
         <>
-            {/* <header>
-                <button type="button">Go back</button>
-                <h1>Категорії</h1>
-            </header> */}
-
-            <ul>
-                <li>Їжа</li>
-                <li>Різне</li>
+            <ul className={s.list}>
+                <li className={s.item}>
+                    <p>Їжа</p>
+                    <button type='button' className={s.btnInfo}>
+                        <svg className={s.svg}>
+                            <use href={sprite + '#icon-dots'}></use>
+                        </svg>
+                    </button>
+                </li>
+                <li className={s.item}>
+                    <p>Різне</p>
+                    <button type='button' className={s.btnInfo}>
+                        <svg className={s.svg}>
+                            <use href={sprite + '#icon-dots'}></use>
+                        </svg>
+                    </button>
+                </li>
             </ul>
 
-            <form>
-                <input type="text" name="category" placeholder="Нова категорія"/>
-                <button type="submit">+</button>
+            <form className={s.form}>
+                <input className={s.input} type="text" name="category" placeholder="Нова категорія"/>
+                <button className={s.btnAdd} type="submit">
+                    <svg className={s.svg}>
+                        <use href={sprite + '#icon-plus'}></use>
+                    </svg>
+                </button>
             </form>
         </>
     )
