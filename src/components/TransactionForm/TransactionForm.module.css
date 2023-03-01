@@ -1,0 +1,15 @@
+.form{
+    background-color: white;
+    margin: 10px 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.label{
+    width: 50%;
+}
+
+.inputDate{
+    border: none;
+    border-bottom: 1px solid gray;
+}

@@ -3,24 +3,24 @@ import s from "./TransactionForm.module.css";
 const TransactionForm = () => {
     return(
         <>
-        <form>
-                <label>День
-                    <input type="date" name="date"/>
+        <form className={s.form}>
+                <label className={s.label}>День
+                    <input className={s.inputDate} type="date" name="date"/>
                 </label>
-                <label>Час 
-                    <input type="time" name="time"/>
+                <label className={s.label}>Час 
+                    <input className={s.inputTime} type="time" name="time"/>
                 </label>
-                <label>Категорія 
-                    <input type="button" name="category" value={'Продукти'}/>
+                <label className={s.label}>Категорія 
+                    <input className={s.inputCategory}  type="button" name="category" value={'Продукти'}/>
                 </label>
-                <label>Сума 
-                    <input type="text" name="sum" placeholder="Введіть суму"/>
+                <label className={s.label}>Сума 
+                    <input className={s.inputSum} type="text" name="sum" placeholder="Введіть суму"/>
                 </label>
-                <label>Валюта 
-                    <input type="button" name="currency" value={'UAH'}/>
+                <label className={s.label}l>Валюта 
+                    <input className={s.inputCurrency} type="button" name="currency" value={'UAH'}/>
                 </label>
-                <label>
-                    <input type="text" name="comment" placeholder="Коментар"/>
+                <label className={s.label}>
+                    <input className={s.inputcomment} type="text" name="comment" placeholder="Коментар"/>
                 </label>
             </form>
         </>
