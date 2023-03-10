@@ -1,35 +1,29 @@
-import { Component } from "react";
 import s from "./TransactionForm.module.css";
 
-class TransactionForm extends Component {
-    state = {
-        date: '2023-03-02',
-        time: '13:00',
-        category: 'Продукти',
-        sum: '',
-        currency: 'UAH',
-        comment: ''
-    }
-
-    handlerChange = (e) => {
-        const {name, value} = e.target;
-        this.setState({[name]: value})
-    }
-
-    render(){
-        const {handelOpenCategoriesList} = this.props;
-        const {date, time, category, sum, currency, comment} = this.state;
+const TransactionForm = ({handelOpenCategoriesList, resetForm, addTransaction, handlerChange, form}) => {
+        const { date, time, category, sum, currency, comment, transType} = form;
         return(
             <>
-            <form className={s.form}>
+            <form className={s.form} 
+                onSubmit={(e) => 
+                {e.preventDefault(); 
+                addTransaction(form);
+                resetForm()
+            }} 
+            >
+                <button type="submit">Відпрвити</button>
+                <select name="transType" id="" value={transType} onChange={handlerChange}>
+                    <option value="costs">Витрати</option>
+                    <option value="incomes">Прибуток</option>
+                </select>
                     <label className={s.label}>День
-                        <input className={s.inputDate} type="date" name="date" onChange={this.handlerChange} value={date}/>
+                        <input className={s.inputDate} type="date" name="date" onChange={handlerChange} value={date}/>
                     </label>
                     <label className={s.label}>Час 
                         <input 
                         className={s.inputTime} 
                         type="time" name="time" 
-                        onChange={this.handlerChange} 
+                        onChange={handlerChange} 
                         value={time}/>
                     </label>
                     <label className={s.label}>Категорія 
@@ -41,18 +35,17 @@ class TransactionForm extends Component {
                         value={category}/>
                     </label>
                     <label className={s.label}>Сума 
-                        <input className={s.inputSum} type="text" name="sum" value={sum} onChange={this.handlerChange} placeholder="Введіть суму"/>
+                        <input className={s.inputSum} type="text" name="sum" value={sum} onChange={handlerChange} placeholder="Введіть суму"/>
                     </label>
-                    <label className={s.label}l>Валюта 
-                        <input className={s.inputCurrency} type="button" name="currency" onChange={this.handlerChange} value={currency}/>
+                    <label className={s.label}>Валюта 
+                        <input className={s.inputCurrency} type="button" name="currency" onChange={handlerChange} value={currency}/>
                     </label>
                     <label className={s.label}>
-                        <input className={s.inputcomment} type="text" name="comment" onChange={this.handlerChange} value={comment} placeholder="Коментар"/>
+                        <input className={s.inputcomment} type="text" name="comment" onChange={handlerChange} value={comment} placeholder="Коментар"/>
                     </label>
                 </form>
             </>
         )
         }
-}
 
 export default TransactionForm;

@@ -4,12 +4,30 @@ import Header from "../Header/Header";
 import s from "./MainPage.module.css"
 import { Component } from "react";
 
-
+const inintialStateForm = {
+    date: '2023-03-02',
+    time: '13:00',
+    category: 'Продукти',
+    sum: '',
+    currency: 'UAH',
+    comment: '',
+    transType: 'costs',
+}
 class MainPage  extends Component{
 
     state = {
-        isCategoryList: false
+        isCategoryList: false,
+        ...inintialStateForm,
     };
+
+    handlerChange = e => {
+        const {name, value} = e.target;
+        this.setState({[name]: value})
+    }
+
+    setCategories = (category) => {
+        this.setState({ category });
+    }
 
     handelOpenCategoriesList = () => {
         this.setState({isCategoryList: true})
@@ -19,9 +37,13 @@ class MainPage  extends Component{
         this.setState({isCategoryList: false})
     }
 
+    resetForm = () => {
+        this.setState({inintialStateForm});
+    }
+
     render(){
-        const {onIncomesBtnClick, onCostsBtnClick} = this.props;
-        const {isCategoryList} = this.state;
+        const {onIncomesBtnClick, onCostsBtnClick, addCategory, categories, addTransaction} = this.props;
+        const {isCategoryList, ...form} = this.state;
         return (
             <div className="container">
                <Header 
@@ -30,9 +52,9 @@ class MainPage  extends Component{
                 cbOnClick={this.handelCloseCategoriesList}
                />
                <main className={s.main}>
-               {isCategoryList ? <CategoriesList /> : 
+               {isCategoryList ? <CategoriesList categories={categories} addCategory= {addCategory} setCategories={this.setCategories}/> : 
                 <>
-                <TransactionForm handelOpenCategoriesList={this.handelOpenCategoriesList}/>
+                <TransactionForm resetForm = {this.resetForm} handlerChange={this.handlerChange} addTransaction={addTransaction} form={form} handelOpenCategoriesList={this.handelOpenCategoriesList}/>
                 <div className={s.blockBtn}>
                     <button className={s.costs} onClick = {onIncomesBtnClick}>Всі витрати</button>
                     <button className={s.incomes} onClick = {onCostsBtnClick}>Всі прибутки</button>
