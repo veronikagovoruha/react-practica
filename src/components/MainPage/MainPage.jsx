@@ -4,20 +4,22 @@ import Header from "../Header/Header";
 import s from "./MainPage.module.css"
 import { Component } from "react";
 
-const inintialStateForm = {
+const initialStateForm = {
     date: '2023-03-02',
     time: '13:00',
-    category: 'Продукти',
     sum: '',
     currency: 'UAH',
     comment: '',
     transType: 'costs',
 }
-class MainPage  extends Component{
 
+// const MainPage 
+
+class MainPage  extends Component{
     state = {
         isCategoryList: false,
-        ...inintialStateForm,
+        category: 'Food',
+        ...initialStateForm,
     };
 
     handlerChange = e => {
@@ -27,6 +29,7 @@ class MainPage  extends Component{
 
     setCategories = (category) => {
         this.setState({ category });
+        this.handelCloseCategoriesList();
     }
 
     handelOpenCategoriesList = () => {
@@ -38,12 +41,13 @@ class MainPage  extends Component{
     }
 
     resetForm = () => {
-        this.setState({inintialStateForm});
+        this.setState({...initialStateForm});
     }
 
     render(){
-        const {onIncomesBtnClick, onCostsBtnClick, addCategory, categories, addTransaction} = this.props;
+        const {onOpenPage, addTransaction} = this.props;
         const {isCategoryList, ...form} = this.state;
+        const {transType} = form;
         return (
             <div className="container">
                <Header 
@@ -52,12 +56,12 @@ class MainPage  extends Component{
                 cbOnClick={this.handelCloseCategoriesList}
                />
                <main className={s.main}>
-               {isCategoryList ? <CategoriesList categories={categories} addCategory= {addCategory} setCategories={this.setCategories}/> : 
+               {isCategoryList ? <CategoriesList transType={transType} setCategories={this.setCategories}/> : 
                 <>
                 <TransactionForm resetForm = {this.resetForm} handlerChange={this.handlerChange} addTransaction={addTransaction} form={form} handelOpenCategoriesList={this.handelOpenCategoriesList}/>
                 <div className={s.blockBtn}>
-                    <button className={s.costs} onClick = {onIncomesBtnClick}>Всі витрати</button>
-                    <button className={s.incomes} onClick = {onCostsBtnClick}>Всі прибутки</button>
+                    <button className={s.costs} onClick = {() => onOpenPage('costs')}>Всі витрати</button>
+                    <button className={s.incomes} onClick = {() => onOpenPage('incomes')}>Всі прибутки</button>
                 </div>
                 </>}
                </main>

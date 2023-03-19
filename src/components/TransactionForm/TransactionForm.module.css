@@ -3,6 +3,7 @@
     margin: 10px 5px;
     display: flex;
     flex-wrap: wrap;
+    height: calc(100vh - 137px)
 }
 
 .label{
@@ -12,4 +13,8 @@
 .inputDate{
     border: none;
     border-bottom: 1px solid gray;
+}
+
+.submit{
+    height: 30px;
 }

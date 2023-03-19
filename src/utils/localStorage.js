@@ -1,7 +1,9 @@
 const keys = {
     CATEGORIS: 'categories',
     COSTS: 'costs',
-    INCOMES: 'incomes'
+    INCOMES: 'incomes',
+    COST_CAT: 'costsCategories',
+    INCOMES_CAT: 'incomesCategories'
 }
 
 const setDataToLS = (key, data) => {
@@ -14,5 +16,7 @@ const getDataFromLS = (key, initialValue) => {
     return JSON.parse(data) ?? initialValue;
 }
 
-export default {keys, setDataToLS, getDataFromLS};
+const lsApi = {keys, setDataToLS, getDataFromLS};
+
+export default lsApi;
 
