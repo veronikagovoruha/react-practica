@@ -2,7 +2,7 @@ import TransactionForm from "../TransactionForm/TransactionForm";
 import CategoriesList from "../CategoriesList/CategoriesList";
 import Header from "../Header/Header";
 import s from "./MainPage.module.css"
-import { Component } from "react";
+import { useState } from "react";
 
 const initialStateForm = {
     date: '2023-03-02',
@@ -13,62 +13,55 @@ const initialStateForm = {
     transType: 'costs',
 }
 
-// const MainPage 
+const MainPage = ({ onOpenPage, addTransaction }) => {
+    const [isCategoryList, setIsCategoryList] = useState(false);
+    const [category, setCategory] = useState('Food');
+    const [form, setForm] = useState({ ...initialStateForm });
 
-class MainPage  extends Component{
-    state = {
-        isCategoryList: false,
-        category: 'Food',
-        ...initialStateForm,
-    };
-
-    handlerChange = e => {
-        const {name, value} = e.target;
-        this.setState({[name]: value})
+    const handlerChange = e => {
+        const { name, value } = e.target;
+        setForm(form => ({ ...form, [name]: value }));
     }
 
-    setCategories = (category) => {
-        this.setState({ category });
-        this.handelCloseCategoriesList();
+    const setCategories = (category) => {
+        setCategory(category);
+        handelChangeCategoriesList();
     }
 
-    handelOpenCategoriesList = () => {
-        this.setState({isCategoryList: true})
+    const handelChangeCategoriesList = () => {
+        setIsCategoryList(!isCategoryList)
     }
 
-    handelCloseCategoriesList = () => {
-        this.setState({isCategoryList: false})
+    const resetForm = () => {
+        setForm({ ...initialStateForm });
     }
 
-    resetForm = () => {
-        this.setState({...initialStateForm});
-    }
-
-    render(){
-        const {onOpenPage, addTransaction} = this.props;
-        const {isCategoryList, ...form} = this.state;
-        const {transType} = form;
-        return (
-            <div className="container">
-               <Header 
+    return (
+        <div className="container">
+            <Header
                 title={isCategoryList ? 'Категорії' : 'Журнал витрат'}
-                icon = {isCategoryList ? '#icon-left' : null}
-                cbOnClick={this.handelCloseCategoriesList}
-               />
-               <main className={s.main}>
-               {isCategoryList ? <CategoriesList transType={transType} setCategories={this.setCategories}/> : 
-                <>
-                <TransactionForm resetForm = {this.resetForm} handlerChange={this.handlerChange} addTransaction={addTransaction} form={form} handelOpenCategoriesList={this.handelOpenCategoriesList}/>
-                <div className={s.blockBtn}>
-                    <button className={s.costs} onClick = {() => onOpenPage('costs')}>Всі витрати</button>
-                    <button className={s.incomes} onClick = {() => onOpenPage('incomes')}>Всі прибутки</button>
-                </div>
-                </>}
-               </main>
-            </div>
-        )
-    }
-
-
+                icon={isCategoryList ? '#icon-left' : null}
+                cbOnClick={handelChangeCategoriesList}
+            />
+            <main className={s.main}>
+                {isCategoryList ? <CategoriesList transType={form.transType} setCategories={setCategories} /> :
+                    <>
+                        <TransactionForm
+                            category={category}
+                            resetForm={resetForm}
+                            handlerChange={handlerChange}
+                            addTransaction={addTransaction}
+                            form={form}
+                            handelOpenCategoriesList={handelChangeCategoriesList}
+                        />
+                        <div className={s.blockBtn}>
+                            <button className={s.costs} onClick={() => onOpenPage('costs')}>Всі витрати</button>
+                            <button className={s.incomes} onClick={() => onOpenPage('incomes')}>Всі прибутки</button>
+                        </div>
+                    </>}
+            </main>
+        </div>
+    )
 }
+
 export default MainPage;

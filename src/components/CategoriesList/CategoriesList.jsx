@@ -18,7 +18,6 @@ const CategoriesList = ({  transType, setCategories }) => {
         contextValue.addCategory({ title: input, id: nanoid() }, transType);
     }
 
-    console.log(contextValue, transType);
     const categories = contextValue[transType];
     return (
         <>

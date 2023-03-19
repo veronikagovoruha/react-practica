@@ -22,7 +22,6 @@ export const App = () => {
     }
 
     const addTransaction = (transaction) => {
-        console.log(transaction);
         const {transType} = transaction;
         transaction.id = nanoid();
         transType === 'costs' && setCost(prev => [...prev, transaction])

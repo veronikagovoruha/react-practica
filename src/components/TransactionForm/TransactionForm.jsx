@@ -1,7 +1,7 @@
 import s from "./TransactionForm.module.css";
 
-const TransactionForm = ({handelOpenCategoriesList, resetForm, addTransaction, handlerChange, form}) => {
-        const { date, time, category, sum, currency, comment, transType} = form;
+const TransactionForm = ({handelOpenCategoriesList, resetForm, addTransaction, handlerChange, form, category}) => {
+        const { date, time, sum, currency, comment, transType} = form;
         return(
             <>
             <form className={s.form} 
