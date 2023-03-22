@@ -8,6 +8,15 @@
     background-color: rgb(237, 237, 131);
 }
 
-.button{
-    
+.blockBtn{
+    display: flex;
+}
+
+.link{
+    display: block;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 10px;
+    text-decoration: none;
+    background-color: rgb(241, 237, 237);
 }

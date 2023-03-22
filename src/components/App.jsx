@@ -1,49 +1,18 @@
-import { useEffect, useState } from "react";
-import MainPage from "./MainPage/MainPage";
-import lsApi from "../utils/localStorage";
-import TransactionHistoryPage from "./TransactionHistiryPage/TransactionHistoryPage";
-import { nanoid } from "nanoid";
+import { Routes, Route } from 'react-router-dom';
+import {lazy, Suspense} from 'react';
+
+const MainPage = lazy(() => import('../pages/MainPage'));
+const TransactionHistoryPage = lazy(() => import('../pages/TransactionHistoryPage'));
 
 export const App = () => {
-    const [activePage, setActivePage] = useState('main');
-    const [costs, setCost] = useState(() => lsApi.getDataFromLS(lsApi.keys.COSTS, []));
-    const [incomes, setIncomes] = useState(() => lsApi.getDataFromLS(lsApi.keys.INCOMES, []));
     
-    useEffect(() => {
-        lsApi.setDataToLS(lsApi.keys.COSTS, costs)
-    }, [costs]);
-
-    useEffect(() => {
-        lsApi.setDataToLS(lsApi.keys.INCOMES, incomes)
-    }, [incomes]);
-
-    const onOpenPage = (activePage) => {
-        setActivePage(activePage);
-    }
-
-    const addTransaction = (transaction) => {
-        const {transType} = transaction;
-        transaction.id = nanoid();
-        transType === 'costs' && setCost(prev => [...prev, transaction])
-        transType === 'incomes' && setIncomes(prev => [...prev, transaction])
-    }
-
-    switch (activePage) {
-        case 'main':
-            return <MainPage
-                addTransaction={addTransaction}
-                onOpenPage={onOpenPage} />
-        case 'costs':
-            return <TransactionHistoryPage
-                transactions = {costs}
-                transType={activePage}
-                onReturnBtnClick={onOpenPage} />
-        case 'incomes':
-            return <TransactionHistoryPage
-                transactions = {incomes}
-                transType={activePage}
-                onReturnBtnClick={onOpenPage} />
-        default:
-            return;
-    }
+    return (
+        <Suspense fallback={<h2>Loading...</h2>}>
+            <Routes>
+            <Route path="/*" element={<MainPage />} />
+            <Route path="/history/:transType" element={<TransactionHistoryPage/>} />
+            <Route path="*" element={<h1>Error</h1>} />
+        </Routes>
+        </Suspense>
+    );
 }
